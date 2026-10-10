@@ -7,7 +7,7 @@ public class TenPercentDiscount extends Discount{
 
     @Override
     public double calculatePriceAfterDiscount(double originalPrice) {
-        double discount = 0.9;
-        return originalPrice * discount;
+        double priceFactor = 0.9;
+        return originalPrice * priceFactor;
     }
 }

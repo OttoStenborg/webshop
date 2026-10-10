@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ProductFileStorage implements ProductStorage {
-    private Path file = Path.of("products.txt");  // Beskriver var filen sparas
+    private final Path file = Path.of("products.txt");  // Beskriver var filen sparas
 
 
     @Override
@@ -19,9 +19,8 @@ public class ProductFileStorage implements ProductStorage {
             Files.writeString(file, product.toFileLine() + System.lineSeparator() // Skriver en String rad av en produkt objekt
                     , StandardOpenOption.CREATE, StandardOpenOption.APPEND);  // lägger till String raden och skapar filen OM den inte har skapats innan
         } catch (IOException e) {
-            e.getMessage();
+            System.err.println("fel vid hantering" + e.getMessage());
         }
-
     }
 
     @Override
@@ -38,7 +37,7 @@ public class ProductFileStorage implements ProductStorage {
                     productsList.add(product); //                   och sedan konverterar till Product objekt för att därefter
                 }//                                                 lägga in i listan av product Objekt
             } catch (IOException e) {
-                e.getMessage();
+                System.err.println("fel vid hantering" + e.getMessage());
             }
             return productsList; // returnerar hela listan med Product OBJEKT
         }

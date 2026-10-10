@@ -1,5 +1,3 @@
-417203;kaffekopp;49.5;en keramikkopp i vitt
-902315;ryggsäck;799.0;ryggsäck med laptopfack
-136594;vattenflaska;129.9;en återanvändbar flaska i rostfritt stål
-774061;skrivbordslampa;349.0;en lampa med justerbar arm
-123445;dator;20000.0;en spel dator
+1234;hej;50000.0;en hej
+555;wwdwdwd;54545.0;dwdwdwd
+wddwdw;wdwwdw;500.0;wwddwd

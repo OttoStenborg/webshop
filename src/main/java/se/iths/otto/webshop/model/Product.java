@@ -20,7 +20,7 @@ public class Product {
     }
 
     public static Product fromFileLine(String line) {
-        String[] stringValue = line.split(";", 4);//  Skapar en Product OPJEKT av en String
+        String[] stringValue = line.split(";", 4);//  Skapar en Product OBJEKT av en String
 
         String articleNumber = stringValue[0];
         String title = stringValue[1];
