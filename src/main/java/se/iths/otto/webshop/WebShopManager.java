@@ -9,73 +9,80 @@ import java.util.List;
 
 public class WebShopManager {
     private ProductStorage productStorage;
+    private OutInputHandler ioService;
     private boolean isRunning = true;
 
-    public WebShopManager(ProductStorage productStorage) {
+    public WebShopManager(ProductStorage productStorage, OutInputHandler ioService) {
         this.productStorage = productStorage;
+        this.ioService = ioService;
     }
 
-    private void saveProductToStorage(Product product){
+
+    //Metoder som också är package private
+
+    void saveProductToStorage(Product product) {
         productStorage.saveProduct(product);
     }
 
-    private List<Product> getProductsFromStorage(){
+    List<Product> getProductsFromStorage() {
         return productStorage.getProducts();
     }
 
-    private Product getProductFromStorage(String articleNumber){
+    Product getProductFromStorage(String articleNumber) {
         return productStorage.getProduct(articleNumber);
     }
 
 
-    public void startWebShop(){
+    //Start metod som är public
+
+    public void startWebShop() {
         Discount discount = null;
-        String discountCode = IO.readln("Ange rabattkod");
-        if (discountCode.equalsIgnoreCase("halfprice")){
+        String discountCode = ioService.prompt("Ange rabattkod");
+        if (discountCode.equalsIgnoreCase("halfprice")) {
             discount = new HalfPriceDiscount("50% Discount");
-        }
-        else {
+        } else {
             discount = new TenPercentDiscount("10% Discount");
         }
-        while(isRunning){
-            IO.println("1. Lägg till en produkt");
-            IO.println("2. Lista alla produkter");
-            IO.println("3. Visa all information om en produkt");
-            IO.println("4. Avsluta programmet");
-            String input = IO.readln("Ange ett alternativ");
-            switch (input){
+        while (isRunning) {
+            String input = ioService.menu();
+            switch (input) {
                 case "1":
-                    String articleNumber = IO.readln("Ange artikelnr:  ");
-                    String title = IO.readln("Ange namn:  ");
-                    double price = Double.parseDouble(IO.readln("Ange pris:  "));
-                    String description = IO.readln("Ange en beskrivning:  ");
-                    Product product = new Product(articleNumber,title,price,description);
+                    String articleNumber = ioService.prompt("Ange artikelnr:  ");
+                    String title = ioService.prompt("Ange namn:  ");
+                    double price = Double.parseDouble(ioService.prompt("Ange pris:  "));
+                    String description = ioService.prompt("Ange en beskrivning:  ");
+                    Product product = new Product(articleNumber, title, price, description);
                     saveProductToStorage(product);
                     break;
                 case "2":
                     List<Product> products = getProductsFromStorage();
-                    for(Product row : products) {
+                    for (Product row : products) {
                         double discountedPrice = discount.calculatePriceAfterDiscount(row.getPrice());
-                        IO.println("Artikelnummer:  " + row.getArticleNumber());
-                        IO.println("Namn:  " + row.getTitle());
-                        IO.println("Nytt pris:  " + discountedPrice);//anropas lokalt från samma klass
-                        IO.println("Beskrivning:  " + row.getDescription());
-                        IO.println("---------------------------------------------------------------------");
+                        ioService.info("Artikelnummer:  " + row.getArticleNumber());
+                        ioService.info("Namn:  " + row.getTitle());
+                        ioService.info("Nytt pris:  " + discountedPrice);//anropas lokalt från samma klass
+                        ioService.info("Gammalt pris:  " + row.getPrice());
+                        ioService.info("Beskrivning:  " + row.getDescription());
+                        ioService.info("---------------------------------------------------------------------");
                     }
                     break;
                 case "3":
-                    articleNumber = IO.readln("Ange artikelnr:  ");
-                    Product isFound = getProductFromStorage(articleNumber);
-                    if (isFound == null){
-                        IO.println("Produkten finns inte");
-                    }else{
-                        IO.println(isFound.toFileLine());
+                    articleNumber = ioService.prompt("Ange artikelnr:  ");
+                    Product specifikProduct = getProductFromStorage(articleNumber);
+                    if (specifikProduct == null) {
+                        ioService.info("Produkten finns inte");
+                    } else {
+                        double discountedPrice = discount.calculatePriceAfterDiscount(specifikProduct.getPrice());
+                        ioService.info(specifikProduct.toFileLine());
+                        ioService.info("Artikelnummer:  " + specifikProduct.getArticleNumber());
+                        ioService.info("Namn:  " + specifikProduct.getTitle());
+                        ioService.info("Nytt pris:  " + discountedPrice);
+                        ioService.info("Gammalt pris:  " + specifikProduct.getPrice());
+                        ioService.info("Beskrivning:  " + specifikProduct.getDescription());
                     }
                     break;
                 case "4":
                     isRunning = false;
-
-
             }
         }
 

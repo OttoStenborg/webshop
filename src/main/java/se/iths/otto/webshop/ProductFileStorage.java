@@ -9,16 +9,16 @@ import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ProductFileStorage implements ProductStorage{
+public class ProductFileStorage implements ProductStorage {
     private Path file = Path.of("products.txt");  // Beskriver var filen sparas
 
 
     @Override
     public void saveProduct(Product product) {
-        try{
-            Files.writeString(file,product.toFileLine() + System.lineSeparator() // Skriver en String rad av en produkt objekt
+        try {
+            Files.writeString(file, product.toFileLine() + System.lineSeparator() // Skriver en String rad av en produkt objekt
                     , StandardOpenOption.CREATE, StandardOpenOption.APPEND);  // lägger till String raden och skapar filen OM den inte har skapats innan
-        }catch(IOException e){
+        } catch (IOException e) {
             e.getMessage();
         }
 
@@ -47,8 +47,8 @@ public class ProductFileStorage implements ProductStorage{
     @Override
     public Product getProduct(String articleNumber) {
         List<Product> products = getProducts();  //Använder metoden ovan för att skapa Lista på alla produkter
-        for (Product product : products){ // Letar efter produkt utifrån artikelnummer
-            if(product.getArticleNumber().equals(articleNumber)){
+        for (Product product : products) { // Letar efter produkt utifrån artikelnummer
+            if (product.getArticleNumber().equals(articleNumber)) {
                 return product; // returnerar produkt
             }
         }

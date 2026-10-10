@@ -11,8 +11,6 @@ public abstract class Discount {
     // Skall returnera pris EFTER avdrag
 
 
-
-
     public String getDescription() {
         return description;
     }

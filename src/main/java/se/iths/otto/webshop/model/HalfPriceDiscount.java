@@ -1,13 +1,11 @@
 package se.iths.otto.webshop.model;
 
-public class HalfPriceDiscount extends Discount{
-
+public class HalfPriceDiscount extends Discount {
 
 
     public HalfPriceDiscount(String description) {
         super(description);
     }
-
 
 
     @Override

@@ -15,23 +15,20 @@ public class Product {
 
     //Metoder
 
-    public String toFileLine(){
+    public String toFileLine() {
         return articleNumber + ";" + title + ";" + price + ";" + description;   // returnerar en String text fråm fil
     }
 
-    public static Product fromFileLine(String line){
-        String[] stringValue = line.split(";");//  Skapar en Product OPJEKT av en String
+    public static Product fromFileLine(String line) {
+        String[] stringValue = line.split(";", 4);//  Skapar en Product OPJEKT av en String
 
         String articleNumber = stringValue[0];
         String title = stringValue[1];
         double price = Double.parseDouble(stringValue[2]);
         String description = stringValue[3];
 
-        return new Product(articleNumber,title,price,description);
+        return new Product(articleNumber, title, price, description);
     }
-
-
-
 
 
     public String getArticleNumber() {
